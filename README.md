@@ -1,19 +1,24 @@
-# CRIT submissions for Défi Textmine 2024
+# Défi Textmine 2024
+## CRIT Team
 
-## Description
+Corresponding author: Nicolas Gutehrlé, nicolas.gutehrle@univ-fcomte.fr
 
-This repository contains the data and files for exploring the dataset provided for the Textmine 2024 task. It also contains the files for training the proposed pipeline. 
+### Description
 
-We propose a two-step pipeline, which consists in a candidate extraction step and a candidate classification step: 
+This repository contains the data and files for exploring the dataset provided for the Textmine 2024 task (https://textmine.sciencesconf.org/resource/page/id/8). 
 
-The candidate extraction step is performed with a CRF classifier. To train this classifier, we have modified the training set to as to make it binary (either 'aucun' or 'NER'). Thus, this classifier predicts if a token is part of an NER of not.
+Our proposal relies on linear-chain Conditional Random Field (CRF) classifier and simple features extracted for each token such as their shape, their case, as well as linguistic features such as POS tags and dependency roles. We have trained several classifiers on different sets of features. Moreover, we have performed exhaustive grid search in order to find the optimal hyperparameters combinations.
 
-The candidate classification step is performed with a machine-learning classifier. The classifier predicts if a token is either 'geogFeature', 'geogName' or 'name'. Here, we cast the task as a multi-label classification task. Thus, a token may be classified with a least 1 label. As for now, we have trained a KNN and XGBoost classifier.
-
-## Structure
+### Structure
 This repository is built as follows:
-* data: contains the data provided for the Textmine Task
-* embeddings: contains the French section of the ConceptNet word embeddings. These are stored in the format required to load them with the gensim library. You'll need to decompress the 'embeddings.zip' file first to acces the folder.
-* exploration: contains four notebooks: exploration, crf, classifier and pipeline, with which we can train each model and build the final pipeline and make predictions
-* models: contains the trained models
-* submissions: contains the different generated submission for the task, in the required format
+* data: contains the data provided for the TextMine task, ie the train, test and sample files in CSV format
+* main: contains two Jupyter Notebooks:
+    * exploration: simple exploration of the datasets
+    * models: codes to train the CRF classifier and generate the submission files. This files contains the code to train the classifier with different parameters (hyperparameters, features)
+* models: contains the trained models. Each folder contains the trained model in joblib format, the training parameters in json format and the corresponding submission file in the CSV format.
+* README.md : this file
+* requirements.txt: the dependency to install in order to run this project
+
+### Note
+
+This repo contains another branch named "old". This branch contains previous experiments on this task which proved less fruitful than this one.
